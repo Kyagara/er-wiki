@@ -23,6 +23,7 @@ function params() {
 		Papa.parse(content, {
 			header: true,
 			delimiter: ',',
+			quoteChar: '',
 			complete: function (results) {
 				const data = results.data.reduce((acc, row) => {
 					if (!row.ID || !row.Name || row.Name.includes('[NPC]')) return acc;

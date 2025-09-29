@@ -23,7 +23,7 @@ const parsed = {
 console.log('Parsing loot');
 
 Object.entries(params['ItemLotParam_map.csv']).forEach(([id, param]) => {
-	if (id == '0' || param.lotItemId01 == '0' || !param.Name) return;
+	if (!id || !param.Name || !param.lotItemId01) return;
 
 	const locData = {
 		id: parseInt(id, 10),
@@ -35,7 +35,7 @@ Object.entries(params['ItemLotParam_map.csv']).forEach(([id, param]) => {
 });
 
 Object.entries(params['ItemLotParam_enemy.csv']).forEach(([id, param]) => {
-	if (id == '0' || param.lotItemId02 == '0' || !param.Name) return;
+	if (!id || !param.Name || !param.lotItemId02) return;
 
 	const locData = {
 		id: parseInt(id, 10),
@@ -111,7 +111,7 @@ const weaponMsg = {
 };
 
 Object.entries(params['EquipParamWeapon.csv']).forEach(([id, wpn]) => {
-	if (wpn.iconId == '0') return;
+	if (!wpn.iconId) return;
 
 	const weapon = format.weapon(wpn, weaponMsg, parsed);
 	if (!weapon) return;
