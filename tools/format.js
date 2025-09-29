@@ -28,7 +28,7 @@ function weapon(wpn, weaponMsg, parsed) {
 		type: enums.weaponType(wpn.wepType),
 		weight: parseFloat(wpn.weight),
 		attackAttributes: [],
-		ash: parseInt(wpn.swordArtsParamId) || 0,
+		skill: parseInt(wpn.swordArtsParamId) || 0,
 		caption: [],
 		requirements: {},
 		loot: { locations: [], drops: [] },
@@ -72,21 +72,7 @@ function weapon(wpn, weaponMsg, parsed) {
 		parsedWeapon.stats[altWpn.ID] = stats;
 	});
 
-	if (parsedWeapon.ash != 0) {
-		const ashName = parsed.ashesIDs[parsedWeapon.ash];
-		if (ashName) {
-			const ash = parsed.ashes[ashName];
-			if (ash && ash.iconID) {
-				parsedWeapon.ash = ash;
-			} else {
-				parsedWeapon.ash = 0;
-			}
-		} else {
-			parsedWeapon.ash = 0;
-		}
-	}
-
-	if (parsedWeapon.ash == 0) delete parsedWeapon.ash;
+	weaponSkill(parsedWeapon, parsed);
 
 	parsedWeapon.caption = lore(parsedWeapon, weaponMsg);
 	if (parsedWeapon.caption.length === 0) delete parsedWeapon.caption;
@@ -107,6 +93,30 @@ function weapon(wpn, weaponMsg, parsed) {
 	});
 
 	return parsedWeapon;
+}
+
+function weaponSkill(parsedWeapon, parsed) {
+	if (parsedWeapon.skill != 0) {
+		const ashName = parsed.ashesIDs[parsedWeapon.skill];
+		if (ashName) {
+			const ash = parsed.ashes[ashName];
+			if (ash) {
+				parsedWeapon.skill = ash;
+			}
+		}
+
+		if (Number.isFinite(parsedWeapon.skill)) {
+			const artName = parsed.artsIDs[parsedWeapon.skill];
+			if (artName) {
+				const art = parsed.arts[artName];
+				if (art) {
+					parsedWeapon.skill = art;
+				}
+			}
+		}
+	}
+
+	if (parsedWeapon.skill == 0) delete parsedWeapon.skill;
 }
 
 function armor(armor, armorMsg, parsed) {

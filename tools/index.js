@@ -13,6 +13,8 @@ const parsed = {
 	armors: {},
 	ashes: {},
 	ashesIDs: {},
+	arts: {},
+	artsIDs: {},
 	loot: { locations: {}, drops: {} }
 };
 
@@ -69,6 +71,30 @@ Object.values(params['EquipParamGem.csv']).forEach((param) => {
 });
 
 writeFileSync('./data/Ashes.json', JSON.stringify(parsed.ashes, null, 2));
+
+// Arts (skills)
+
+console.log('Parsing Arts (skills)');
+
+const artMsg = {
+	info: {},
+	caption: msgs['ArtsCaption']
+};
+
+Object.values(params['SwordArtsParam.csv']).forEach((param) => {
+	if (!param.Name || param.Name.includes('%null%')) return;
+
+	const art = format.ash(param, artMsg, parsed);
+	if (!art) return;
+
+	delete art.rarity;
+	delete art.iconID;
+
+	parsed.artsIDs[art.id] = param.Name;
+	parsed.arts[param.Name] = art;
+});
+
+writeFileSync('./data/Arts.json', JSON.stringify(parsed.arts, null, 2));
 
 // Weapons
 

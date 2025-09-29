@@ -55,7 +55,7 @@ declare global {
 		type: string;
 		weight: number;
 		attackAttributes: string[];
-		ash: WeaponAsh;
+		skill: WeaponSkill;
 		caption: string[];
 		requirements?: {
 			strength?: number;
@@ -73,10 +73,10 @@ declare global {
 		stats: Record<number, WeaponStats>;
 	};
 
-	type WeaponAsh = {
+	type WeaponSkill = {
 		id: number;
 		name: string;
-		iconID: number;
+		iconID?: number;
 	};
 
 	type ItemLocation = {

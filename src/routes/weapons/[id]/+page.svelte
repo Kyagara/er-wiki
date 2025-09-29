@@ -11,10 +11,10 @@
 	const weapon: Weapon = getWeaponsData()[params.id];
 
 	let current = $state(weapon.stats[0]);
-	let statID = $state(0);
+	let statID = $state('0');
 
 	$effect(() => {
-		if (statID == weapon.id || Object.keys(weapon.stats).length == 1) return;
+		if (statID == weapon.id.toString(10) || Object.keys(weapon.stats).length == 1) return;
 
 		current = weapon.stats[statID];
 	});
@@ -157,21 +157,25 @@
 		</div>
 
 		<div
-			class="flex flex-col items-center gap-2 border border-slate-700 bg-slate-900/70 lg:col-span-1"
+			class="flex flex-col items-center gap-2 border border-slate-700 bg-slate-900/70 p-2 lg:col-span-1"
 		>
 			<Preview iconID={weapon.iconID} />
 
-			{#if weapon.ash}
-				<img
-					class="max-h-3/5 max-w-3/5 object-contain"
-					src={`/icons/${weapon.ash.iconID}.webp`}
-					alt="Icon"
-					loading="lazy"
-					height="512"
-					width="512"
-				/>
+			{#if weapon.skill}
+				{#if weapon.skill.iconID}
+					<img
+						class="max-h-3/5 max-w-3/5 object-contain"
+						src={`/icons/${weapon.skill.iconID}.webp`}
+						alt="Icon"
+						loading="lazy"
+					/>
+				{/if}
 
-				<a href={`/ashes/${weapon.ash.id}`} class="py-2 underline">{weapon.ash.name}</a>
+				{#if weapon.skill.iconID}
+					<a href={`/ashes/${weapon.skill.id}`} class="py-2 underline">{weapon.skill.name}</a>
+				{:else}
+					<Lore item={weapon.skill} title={false} />
+				{/if}
 			{/if}
 		</div>
 	</div>

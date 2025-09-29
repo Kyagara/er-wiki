@@ -32,10 +32,8 @@ After organizing, run `npm run parse` to generate json files at `./data` and the
 ### Problems/TODO
 
 - Improve visual of stats section.
-- Slight visual bug with the weapon stat selection.
 - Missing values for parameters like `Causes blood loss buildup (<?bleedATKpwr?>)`.\*
 - Missing a lot of item locations (map location and enemy drop).\*
-- Missing skills as they are not the same as Ashes of War.
 - Missing weapons scaling and upgrade information.\*
 - Add more stats to ashes and armors.
 - Script/s and tool/s to extract data to avoid manually doing it.

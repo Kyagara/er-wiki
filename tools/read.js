@@ -9,7 +9,11 @@ function params() {
 	const params = {};
 	const dir = readdirSync(PARAMS_PATH).filter(
 		(f) =>
-			f.includes('Weapon') || f.includes('Gem') || f.includes('LotParam') || f.includes('Equip')
+			f.includes('Weapon') ||
+			f.includes('Gem') ||
+			f.includes('LotParam') ||
+			f.includes('Equip') ||
+			f.includes('SwordArts')
 	);
 
 	dir.forEach((filename) => {

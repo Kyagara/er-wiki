@@ -1,14 +1,22 @@
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+	const imgs = ['/home.webp', '/home2.webp'];
+	let image = $state('');
+
+	onMount(() => {
+		image = imgs[Math.floor(Math.random() * imgs.length)];
+	});
+</script>
+
 <svelte:head>
 	<title>er-wiki</title>
 </svelte:head>
 
 <main class="h-[calc(100vh-2.5rem)] w-full">
-	<img
-		src="/home.webp"
-		loading="eager"
-		alt="important"
-		class="mx-auto h-full w-auto object-contain"
-	/>
+	{#if image}
+		<img src={image} loading="eager" alt="important" class="mx-auto h-full w-auto object-contain" />
+	{/if}
 </main>
 
 <img
