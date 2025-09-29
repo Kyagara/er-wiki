@@ -11,9 +11,9 @@ const msgs = read.msgs();
 const parsed = {
 	weapons: {},
 	armors: {},
-	ashes: {},
+	// Ashes and unique skills
+	skills: {},
 	ashesIDs: {},
-	arts: {},
 	artsIDs: {},
 	loot: { locations: {}, drops: {} }
 };
@@ -57,20 +57,21 @@ const ashMsg = {
 
 Object.values(params['EquipParamGem.csv']).forEach((param) => {
 	const name = param.Name.replace('Ash of War: ', '');
-	if (!name || name.includes('test gem') || name.includes('Ash of War:')) return;
+	if (!name || name.includes('test gem')) return;
+
+	parsed.ashesIDs[param.ID] = name;
+
+	if (param.ID < parseInt(10000, 10)) return;
 
 	param.Name = name;
 
-	const ash = format.ash(param, ashMsg, parsed);
+	const ash = format.skill(param, ashMsg, parsed);
 	if (!ash) return;
 
-	parsed.ashesIDs[ash.id] = name;
 	if (ash.iconID) {
-		parsed.ashes[name] = ash;
+		parsed.skills[name] = ash;
 	}
 });
-
-writeFileSync('./data/Ashes.json', JSON.stringify(parsed.ashes, null, 2));
 
 // Arts (skills)
 
@@ -84,17 +85,20 @@ const artMsg = {
 Object.values(params['SwordArtsParam.csv']).forEach((param) => {
 	if (!param.Name || param.Name.includes('%null%')) return;
 
-	const art = format.ash(param, artMsg, parsed);
+	parsed.artsIDs[param.ID] = param.Name;
+
+	const art = format.skill(param, artMsg, parsed);
 	if (!art) return;
 
 	delete art.rarity;
 	delete art.iconID;
 
-	parsed.artsIDs[art.id] = param.Name;
-	parsed.arts[param.Name] = art;
+	if (!parsed.skills[param.Name]) {
+		parsed.skills[param.Name] = art;
+	}
 });
 
-writeFileSync('./data/Arts.json', JSON.stringify(parsed.arts, null, 2));
+writeFileSync('./data/Skills.json', JSON.stringify(parsed.skills, null, 2));
 
 // Weapons
 
@@ -107,7 +111,7 @@ const weaponMsg = {
 };
 
 Object.entries(params['EquipParamWeapon.csv']).forEach(([id, wpn]) => {
-	if (wpn.iconId === '0') return;
+	if (wpn.iconId == '0') return;
 
 	const weapon = format.weapon(wpn, weaponMsg, parsed);
 	if (!weapon) return;

@@ -35,7 +35,7 @@ After organizing, run `npm run parse` to generate json files at `./data` and the
 - Missing values for parameters like `Causes blood loss buildup (<?bleedATKpwr?>)`.\*
 - Missing a lot of item locations (map location and enemy drop).\*
 - Missing weapons scaling and upgrade information.\*
-- Add more stats to ashes and armors.
+- Add more stats.
 - Script/s and tool/s to extract data to avoid manually doing it.
 
 > \*not sure how to retrieve this information.

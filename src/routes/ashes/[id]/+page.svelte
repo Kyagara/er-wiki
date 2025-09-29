@@ -10,7 +10,7 @@
 
 	function findByID(id: number) {
 		for (const key in data) {
-			if (data[key].id === id) {
+			if (data[key].id == id) {
 				return data[key];
 			}
 		}

@@ -7,7 +7,7 @@
 </script>
 
 <button
-	class={`px-4 ${selected === value ? 'bg-indigo-500/70 text-white' : 'cursor-pointer bg-gray-900 text-white hover:bg-gray-700'}`}
+	class={`px-4 ${selected == value ? 'bg-indigo-500/70 text-white' : 'cursor-pointer bg-gray-900 text-white hover:bg-gray-700'}`}
 	onclick={() => toggle(value)}
 >
 	{value}

@@ -24,7 +24,7 @@
 	let filtered: ListPageData[] = $state([]);
 
 	$effect(() => {
-		let base = selected === 'All' ? Object.values(armors).flat() : (armors[selected] ?? []);
+		let base = selected == 'All' ? Object.values(armors).flat() : (armors[selected] ?? []);
 
 		const q = (search ?? '').trim().toLowerCase();
 		if (!q) {

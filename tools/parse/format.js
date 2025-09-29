@@ -1,6 +1,6 @@
 import enums from './enums.js';
 
-function ash(param, ashMsg, parsed) {
+function skill(param, ashMsg, parsed) {
 	const parsedAsh = {
 		id: parseInt(param.ID, 10),
 		name: param.Name,
@@ -10,11 +10,8 @@ function ash(param, ashMsg, parsed) {
 		loot: { locations: [], drops: [] }
 	};
 
-	parsedAsh.caption = lore(parsedAsh, ashMsg);
-	if (parsedAsh.caption.length === 0) delete parsedAsh.caption;
-
-	parsedAsh.loot = loot(parsedAsh, parsed);
-	if (Object.keys(parsedAsh.loot).length == 0) delete parsedAsh.loot;
+	lore(parsedAsh, ashMsg);
+	loot(parsedAsh, parsed);
 
 	return parsedAsh;
 }
@@ -74,11 +71,8 @@ function weapon(wpn, weaponMsg, parsed) {
 
 	weaponSkill(parsedWeapon, parsed);
 
-	parsedWeapon.caption = lore(parsedWeapon, weaponMsg);
-	if (parsedWeapon.caption.length === 0) delete parsedWeapon.caption;
-
-	parsedWeapon.loot = loot(parsedWeapon, parsed);
-	if (Object.keys(parsedWeapon.loot).length == 0) delete parsedWeapon.loot;
+	lore(parsedWeapon, weaponMsg);
+	loot(parsedWeapon, parsed);
 
 	Object.entries(parsedWeapon.stats).forEach(([id, s]) => {
 		if (!s.effects) return;
@@ -89,34 +83,10 @@ function weapon(wpn, weaponMsg, parsed) {
 			})
 			.flat();
 
-		if (parsedWeapon.stats[id].effects.length === 0) delete parsedWeapon.stats[id].effects;
+		if (parsedWeapon.stats[id].effects.length == 0) delete parsedWeapon.stats[id].effects;
 	});
 
 	return parsedWeapon;
-}
-
-function weaponSkill(parsedWeapon, parsed) {
-	if (parsedWeapon.skill != 0) {
-		const ashName = parsed.ashesIDs[parsedWeapon.skill];
-		if (ashName) {
-			const ash = parsed.ashes[ashName];
-			if (ash) {
-				parsedWeapon.skill = ash;
-			}
-		}
-
-		if (Number.isFinite(parsedWeapon.skill)) {
-			const artName = parsed.artsIDs[parsedWeapon.skill];
-			if (artName) {
-				const art = parsed.arts[artName];
-				if (art) {
-					parsedWeapon.skill = art;
-				}
-			}
-		}
-	}
-
-	if (parsedWeapon.skill == 0) delete parsedWeapon.skill;
 }
 
 function armor(armor, armorMsg, parsed) {
@@ -138,13 +108,33 @@ function armor(armor, armorMsg, parsed) {
 	if (armor.armEquip == 1) parsedArmor.type = 'Arms';
 	if (armor.legEquip == 1) parsedArmor.type = 'Legs';
 
-	parsedArmor.caption = lore(parsedArmor, armorMsg);
-	if (parsedArmor.caption.length === 0) delete parsedArmor.caption;
-
-	parsedArmor.loot = loot(parsedArmor, parsed);
-	if (Object.keys(parsedArmor.loot).length == 0) delete parsedArmor.loot;
+	lore(parsedArmor, armorMsg);
+	loot(parsedArmor, parsed);
 
 	return parsedArmor;
+}
+
+function weaponSkill(parsedWeapon, parsed) {
+	if (parsedWeapon.skill != 0) {
+		let skillName = parsed.ashesIDs[parsedWeapon.skill];
+		if (parsed.artsIDs[parsedWeapon.skill]) {
+			skillName = parsed.artsIDs[parsedWeapon.skill];
+		}
+
+		if (skillName) {
+			const skill = parsed.skills[skillName];
+			if (skill) {
+				if (skill.iconID) {
+					delete skill.caption;
+					delete skill.loot;
+				}
+
+				parsedWeapon.skill = skill;
+			}
+		}
+	}
+
+	if (parsedWeapon.skill == 0) delete parsedWeapon.skill;
 }
 
 function weaponStats(wpn) {
@@ -159,7 +149,7 @@ function weaponStats(wpn) {
 
 	['0', '1', '2'].forEach((idx) => {
 		const val = parseInt(wpn['spEffectMsgId' + idx], 10) || 0;
-		if (val === 0 || val === -1) return;
+		if (val == 0 || val == -1) return;
 		stats.effects.push(val);
 	});
 
@@ -174,7 +164,7 @@ function weaponStats(wpn) {
 	};
 	Object.entries(attackBase).forEach(([key, name]) => {
 		const val = parseInt(wpn['attackBase' + key], 10) || 0;
-		if (val === 0) return;
+		if (val == 0) return;
 		stats.damage.base[name] = val;
 	});
 
@@ -187,7 +177,7 @@ function weaponStats(wpn) {
 	};
 	Object.entries(guardCutRate).forEach(([key, name]) => {
 		const val = parseInt(wpn[key + 'GuardCutRate'], 10) || 0;
-		if (val === 0) return;
+		if (val == 0) return;
 		stats.guard.cut[name] = val;
 	});
 
@@ -195,49 +185,46 @@ function weaponStats(wpn) {
 }
 
 function lore(item, msg) {
-	let caption = [];
-
 	if (msg.info[item.id]) {
 		msg.info[item.id].forEach((e) => {
-			caption.push(e.split('\n\n'));
+			item.caption.push(e.split('\n\n'));
 		});
 	}
 
 	if (msg.caption[item.id]) {
 		msg.caption[item.id].forEach((e) => {
-			caption.push(e.split('\n\n'));
+			item.caption.push(e.split('\n\n'));
 		});
 	}
 
-	caption = caption.flat();
-	return caption;
+	item.caption = item.caption.flat();
+
+	if (item.caption.length == 0) delete item.caption;
 }
 
 function loot(item, parsed) {
-	const loot = { locations: [], drops: [] };
-
 	Object.values(parsed.loot.locations).forEach((loc) => {
 		if (!isValidLocData(item, loc)) return;
-		loot.locations.push(loc);
+		item.loot.locations.push(loc);
 	});
 
-	loot.locations = loot.locations.filter(
-		(obj, index, self) => index === self.findIndex((t) => t.name === obj.name)
+	item.loot.locations = item.loot.locations.filter(
+		(obj, index, self) => index == self.findIndex((t) => t.name == obj.name)
 	);
 
 	Object.values(parsed.loot.drops).forEach((loc) => {
 		if (!isValidLocData(item, loc)) return;
-		loot.drops.push(loc);
+		item.loot.drops.push(loc);
 	});
 
-	loot.drops = loot.drops.filter(
-		(obj, index, self) => index === self.findIndex((t) => t.name === obj.name)
+	item.loot.drops = item.loot.drops.filter(
+		(obj, index, self) => index == self.findIndex((t) => t.name == obj.name)
 	);
 
-	if (loot.locations.length == 0) delete loot.locations;
-	if (loot.drops.length == 0) delete loot.drops;
+	if (item.loot.locations.length == 0) delete item.loot.locations;
+	if (item.loot.drops.length == 0) delete item.loot.drops;
 
-	return loot;
+	if (Object.keys(item.loot).length == 0) delete item.loot;
 }
 
 function isValidLocData(item, loc) {
@@ -249,4 +236,4 @@ function isValidLocData(item, loc) {
 	return true;
 }
 
-export default { weapon, armor, ash };
+export default { weapon, armor, skill };

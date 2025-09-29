@@ -5,6 +5,7 @@
 	import Dropdown from '$lib/components/Dropdown.svelte';
 
 	import { getWeaponsData } from '$lib/data.js';
+	import { rarityColor } from '$lib/index.js';
 
 	const { params } = $props();
 
@@ -172,7 +173,11 @@
 				{/if}
 
 				{#if weapon.skill.iconID}
-					<a href={`/ashes/${weapon.skill.id}`} class="py-2 underline">{weapon.skill.name}</a>
+					<a
+						href={`/ashes/${weapon.skill.id}`}
+						class="py-2 underline"
+						style={`color: ${rarityColor(weapon.rarity)};`}>{weapon.skill.name}</a
+					>
 				{:else}
 					<Lore item={weapon.skill} title={false} />
 				{/if}
