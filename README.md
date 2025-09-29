@@ -1,6 +1,14 @@
 ## er-wiki
 
-An attempt of a wiki for Elden Ring and its DLC. Wanted to have some fun with datamining and parsing extracted files.
+An attempt of a wiki for Elden Ring and its DLC. Wanted to have some fun with extracting data and parsing files.
+
+<p align="center">
+    <img src="./static/er.gif" height="128" width="128" alt="very important">
+</p>
+
+### About
+
+A live version can be found [here](https://er-wiki.pages.dev/) and uses Cloudflare Pages, not updated frequently.
 
 This is by no means a replacement of anything currently, only supporting very basic things and few categories (weapons, armors, ashes of war).
 
@@ -21,7 +29,7 @@ Extraction of the data is **not automated** and was done using [Smithbox](https:
 
 After organizing, run `npm run parse` to generate json files at `./data` and then `npm run build`.
 
-## Problems/TODO
+### Problems/TODO
 
 - Improve visual of stats section.
 - Slight visual bug with the weapon stat selection.
