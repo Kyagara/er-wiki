@@ -111,7 +111,7 @@ const weaponMsg = {
 };
 
 Object.entries(params['EquipParamWeapon.csv']).forEach(([id, wpn]) => {
-	if (!wpn.iconId) return;
+	if (wpn.iconId == 0) return;
 
 	const weapon = format.weapon(wpn, weaponMsg, parsed);
 	if (!weapon) return;
