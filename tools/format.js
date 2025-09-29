@@ -73,13 +73,20 @@ function weapon(wpn, weaponMsg, parsed) {
 	});
 
 	if (parsedWeapon.ash != 0) {
-		if (parsed.ashes[parsedWeapon.ash]) {
-			const ash = Object.values(parsed.ashes).find((a) => a.id === parsedWeapon.ash);
-			parsedWeapon.ash = parsed.ashes[ash.name];
+		const ashName = parsed.ashesIDs[parsedWeapon.ash];
+		if (ashName) {
+			const ash = parsed.ashes[ashName];
+			if (ash && ash.iconID) {
+				parsedWeapon.ash = ash;
+			} else {
+				parsedWeapon.ash = 0;
+			}
 		} else {
-			delete parsedWeapon.ash;
+			parsedWeapon.ash = 0;
 		}
 	}
+
+	if (parsedWeapon.ash == 0) delete parsedWeapon.ash;
 
 	parsedWeapon.caption = lore(parsedWeapon, weaponMsg);
 	if (parsedWeapon.caption.length === 0) delete parsedWeapon.caption;
@@ -138,7 +145,7 @@ function weaponStats(wpn) {
 		guard: { cut: {} }
 	};
 
-	if (wpn.specialAttribute == '') delete wpn.specialAttribute;
+	if (!stats.specialAttribute) delete stats.specialAttribute;
 
 	['0', '1', '2'].forEach((idx) => {
 		const val = parseInt(wpn['spEffectMsgId' + idx], 10) || 0;

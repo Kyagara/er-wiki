@@ -12,6 +12,7 @@ const parsed = {
 	weapons: {},
 	armors: {},
 	ashes: {},
+	ashesIDs: {},
 	loot: { locations: {}, drops: {} }
 };
 
@@ -54,22 +55,17 @@ const ashMsg = {
 
 Object.values(params['EquipParamGem.csv']).forEach((param) => {
 	const name = param.Name.replace('Ash of War: ', '');
-	if (
-		!name ||
-		!param.iconId ||
-		param.iconId == '0' ||
-		parseInt(param.ID, 10) < 10000 ||
-		name.includes('test gem') ||
-		name.includes('Ash of War:')
-	)
-		return;
+	if (!name || name.includes('test gem') || name.includes('Ash of War:')) return;
 
 	param.Name = name;
 
 	const ash = format.ash(param, ashMsg, parsed);
 	if (!ash) return;
 
-	parsed.ashes[name] = ash;
+	parsed.ashesIDs[ash.id] = name;
+	if (ash.iconID) {
+		parsed.ashes[name] = ash;
+	}
 });
 
 writeFileSync('./data/Ashes.json', JSON.stringify(parsed.ashes, null, 2));
