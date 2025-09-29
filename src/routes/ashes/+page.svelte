@@ -7,7 +7,7 @@
 	const ashes: ListPageData[] = [];
 
 	Object.values(getAshesData()).forEach((a) => {
-		if (a.iconID == 0) return;
+		if (!a.iconID) return;
 
 		ashes.push({
 			id: a.id,

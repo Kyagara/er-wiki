@@ -9,11 +9,11 @@
 	{#each items as item (item.id)}
 		<a
 			href={`/${category}/${item.id}`}
-			class="flex w-full flex-col items-center gap-2 border border-gray-800/50 p-2 hover:bg-gray-900"
+			class="flex min-h-32 w-full flex-col items-center gap-2 border border-gray-800/50 p-2 hover:bg-gray-900"
 			aria-label={item.n}
 		>
 			<img
-				class="max-h-32 w-full rounded-md object-contain"
+				class="max-h-32 min-h-32 w-full rounded-md object-contain"
 				src={`/icons/${item.ic}.webp`}
 				alt="Icon"
 				loading={item.ic < threshold ? 'eager' : 'lazy'}
