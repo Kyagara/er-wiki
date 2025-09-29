@@ -8,7 +8,7 @@ An attempt of a wiki for Elden Ring and its DLC. Wanted to have some fun with ex
 
 ### About
 
-A live version can be found [here](https://er-wiki.pages.dev/) and uses Cloudflare Pages, not updated frequently.
+A live version can be found [here](https://er-wiki.pages.dev/), not updated frequently.
 
 This is by no means a replacement of anything currently, only supporting very basic things and few categories (weapons, armors, ashes of war).
 
@@ -31,11 +31,11 @@ After organizing, run `npm run parse` to generate json files at `./data` and the
 
 ### Problems/TODO
 
+- Improve and add more stats.
 - Improve visual of stats section.
+- Script/s and tool/s to extract data to avoid manually doing it, also for converting icons to `webp`.
 - Missing values for parameters like `Causes blood loss buildup (<?bleedATKpwr?>)`.\*
 - Missing a lot of item locations (map location and enemy drop).\*
 - Missing weapons scaling and upgrade information.\*
-- Add more stats.
-- Script/s and tool/s to extract data to avoid manually doing it.
 
 > \*not sure how to retrieve this information.

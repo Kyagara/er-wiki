@@ -1,0 +1,8 @@
+/icons/*
+    Cache-Control: public, max-age=43200, stale-while-revalidate=86400
+/home.webp
+    Cache-Control: public, max-age=43200, stale-while-revalidate=86400
+/home2.webp
+    Cache-Control: public, max-age=43200, stale-while-revalidate=86400
+/er.gif
+    Cache-Control: public, max-age=43200, stale-while-revalidate=86400
