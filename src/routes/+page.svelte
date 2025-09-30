@@ -13,9 +13,9 @@
 	<title>er-wiki</title>
 </svelte:head>
 
-<main class="h-[calc(100vh-2.5rem)] w-full">
+<main class="h-[calc(100vh-2.5rem)]">
 	{#if image}
-		<img src={image} loading="eager" alt="important" class="mx-auto h-full w-auto object-contain" />
+		<img src={image} loading="eager" alt="important" class="mx-auto h-full w-auto object-cover" />
 	{/if}
 </main>
 
