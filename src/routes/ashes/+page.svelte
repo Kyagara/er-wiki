@@ -2,6 +2,8 @@
 	import Grid from '$lib/components/Grid.svelte';
 	import Search from '$lib/components/Search.svelte';
 
+	import CategoryPageHead from '$lib/layout/CategoryPageHead.svelte';
+
 	import { getAshesData } from '$lib/ashes.js';
 
 	const { ashes } = getAshesData();
@@ -25,9 +27,7 @@
 	});
 </script>
 
-<svelte:head>
-	<title>er-wiki - Ashes of War</title>
-</svelte:head>
+<CategoryPageHead category={'Ashes'} />
 
 <main class="mx-auto w-full max-w-5xl p-4">
 	<div class="mb-4 flex min-h-12 items-center gap-3">

@@ -36,6 +36,7 @@ Run `npm run parse` to generate json files at `./data` and then `npm run dev`.
 ### Problems/TODO
 
 - Separate some weapon types (shields, arrows, etc) and some consumables (pots, grease, etc) into separate pages.
+- Maybe switch to a simple svelte:head component instead of using svelte-seo.
 - Add crafting material page.
 - Improve and add more stats.
 - Improve visual of stats section.

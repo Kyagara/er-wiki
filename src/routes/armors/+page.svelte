@@ -3,6 +3,8 @@
 	import Search from '$lib/components/Search.svelte';
 	import Toggle from '$lib/components/Toggle.svelte';
 
+	import CategoryPageHead from '$lib/layout/CategoryPageHead.svelte';
+
 	import { getArmorsData } from '$lib/armors.js';
 
 	const { armors } = getArmorsData();
@@ -29,9 +31,7 @@
 	});
 </script>
 
-<svelte:head>
-	<title>er-wiki - Armors</title>
-</svelte:head>
+<CategoryPageHead category={'Armors'} />
 
 <main class="mx-auto w-full max-w-5xl p-4">
 	<div class="mb-4 flex min-h-12 items-center gap-3">

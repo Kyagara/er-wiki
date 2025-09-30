@@ -5,7 +5,9 @@
 	import Dropdown from '$lib/components/Dropdown.svelte';
 
 	import { getWeapon } from '$lib/weapons.js';
-	import { rarityColor } from '$lib/index.js';
+	import { rarityColor, weaponType } from '$lib/index.js';
+
+	import Head from '$lib/layout/ItemPageHead.svelte';
 
 	const { params } = $props();
 	const weapon = getWeapon(params.id);
@@ -32,9 +34,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>er-wiki - {weapon.name}</title>
-</svelte:head>
+<Head item={weapon} category="weapons" type={weaponType(weapon.type)} />
 
 <main class="mx-auto max-w-6xl px-4 py-2">
 	<a class="italic underline opacity-90 hover:text-white" href="/weapons"> Go back </a>

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import SvelteSeo from 'svelte-seo';
+
 	const imgs = ['/home.webp', '/home2.webp'];
 	let image = $state('');
 
@@ -9,9 +11,31 @@
 	});
 </script>
 
-<svelte:head>
-	<title>er-wiki</title>
-</svelte:head>
+<SvelteSeo
+	title={`er-wiki`}
+	description={`A wiki for Elden Ring and its DLC.`}
+	canonical="https://er-wiki.pages.dev"
+	keywords={`wiki, elden ring, shadow of the erdtree`}
+	openGraph={{
+		title: `er-wiki`,
+		description: `A wiki Elden Ring and its DLC.`,
+		image: `https://er-wiki.pages.dev/er.gif`,
+		url: `https://er-wiki.pages.dev`,
+		type: 'website',
+		images: [
+			{
+				url: `https://er-wiki.pages.dev/er.gif`
+			}
+		],
+		site_name: 'er-wiki'
+	}}
+	twitter={{
+		card: 'summary',
+		title: `er-wiki`,
+		description: `A wiki for Elden Ring and its DLC.`,
+		image: `https://er-wiki.pages.dev/icons/er.gif`
+	}}
+/>
 
 <main class="h-[calc(100vh-2.5rem)]">
 	{#if image}

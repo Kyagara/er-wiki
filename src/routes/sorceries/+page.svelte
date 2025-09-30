@@ -2,6 +2,8 @@
 	import Grid from '$lib/components/Grid.svelte';
 	import Search from '$lib/components/Search.svelte';
 
+	import CategoryPageHead from '$lib/layout/CategoryPageHead.svelte';
+
 	import { getSorceriesData } from '$lib/sorceries.js';
 
 	const { sorceries } = getSorceriesData();
@@ -25,9 +27,7 @@
 	});
 </script>
 
-<svelte:head>
-	<title>er-wiki - Sorceries</title>
-</svelte:head>
+<CategoryPageHead category={'Sorceries'} />
 
 <main class="mx-auto w-full max-w-5xl p-4">
 	<div class="mb-4 flex min-h-12 items-center gap-3">
