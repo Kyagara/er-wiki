@@ -10,8 +10,6 @@
 				src={`/icons/${iconID}.webp`}
 				alt="Icon"
 				loading="lazy"
-				height="512"
-				width="512"
 			/>
 		</div>
 	</div>

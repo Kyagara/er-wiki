@@ -34,5 +34,5 @@
 		<Search bind:search />
 	</div>
 
-	<Grid items={filtered} category={'sorceries'} threshold={8319} />
+	<Grid items={filtered} category={'sorceries'} threshold={6022} />
 </main>

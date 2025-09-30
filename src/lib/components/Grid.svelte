@@ -18,7 +18,6 @@
 				alt="Icon"
 				loading={item.ic < threshold ? 'eager' : 'lazy'}
 				fetchpriority={item.ic < threshold ? 'high' : 'low'}
-				height="128"
 			/>
 
 			<div

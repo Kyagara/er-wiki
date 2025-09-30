@@ -19,15 +19,19 @@ Extraction of the data is **not automated** and was done using [Smithbox](https:
 ```
 // Main data folder in the root
 ./data/
+// Item icons folder with the icons already exported to some image format
+./data/icons
 // Text files
 ./data/msg/engus/item
 // Params
 ./data/params
-// Icons (all were converted to .webp)
+// Icons, will be generated later
 ./static/icons
 ```
 
-After organizing, run `npm run parse` to generate json files at `./data` and then `npm run build`.
+Do `npm i` and after making sure you have the required data as above, run `npm run convert:icons`, this will run a python3 script to convert everything to webp and save it to the `./static/icons` folder.
+
+Run `npm run parse` to generate json files at `./data` and then `npm run dev`.
 
 ### Problems/TODO
 
@@ -35,7 +39,7 @@ After organizing, run `npm run parse` to generate json files at `./data` and the
 - Add crafting material page.
 - Improve and add more stats.
 - Improve visual of stats section.
-- Script/s and tool/s to extract data to avoid manually doing it, also for converting icons to `webp`.
+- Script/s and tool/s to extract data to avoid manually doing it.
 - Missing values for parameters like `Causes blood loss buildup (<?bleedATKpwr?>)`.\*
 - Missing a lot of item locations (map location and enemy drop).\*
 - Missing weapons scaling and upgrade information.\*
