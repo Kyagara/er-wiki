@@ -11,6 +11,11 @@ const msgs = read.msgs();
 const parsed = {
 	weapons: {},
 	armors: {},
+	talismans: {},
+	incantations: {},
+	sorceries: {},
+	consumables: {},
+	spirits: {},
 	// Ashes and unique skills
 	skills: {},
 	ashesIDs: {},
@@ -149,3 +154,69 @@ Object.entries(params['EquipParamProtector.csv']).forEach(([id, param]) => {
 });
 
 writeFileSync('./data/Armors.json', JSON.stringify(parsed.armors, null, 2));
+
+console.log('Parsing Talismans');
+
+// Talismans
+
+const talismanMsg = {
+	info: msgs['AccessoryInfo'],
+	caption: msgs['AccessoryCaption']
+};
+
+Object.entries(params['EquipParamAccessory.csv']).forEach(([id, param]) => {
+	if (!param.Name) return;
+
+	const talisman = format.talisman(param, talismanMsg, parsed);
+	if (!talisman) return;
+
+	parsed.talismans[id] = talisman;
+});
+
+writeFileSync('./data/Talismans.json', JSON.stringify(parsed.talismans, null, 2));
+
+console.log('Parsing Goods (sorceries, incantations, consumables, spirit ashes)');
+
+// Goods (sorceries, incantations, consumables, spirit ashes)
+
+const goodsMsg = {
+	info: msgs['GoodsInfo'],
+	info2: msgs['Goods2Info'],
+	caption: msgs['GoodsCaption']
+};
+
+Object.entries(params['EquipParamGoods.csv']).forEach(([id, param]) => {
+	const name = param.Name;
+	if (!name || name.includes(' +') || name.includes('NPC ') || !param.iconId) return;
+
+	if (name.startsWith('[Incantation]')) {
+		param.Name = name.replace('[Incantation] ', '');
+		const incantation = format.incantation(param, goodsMsg, parsed);
+		parsed.incantations[id] = incantation;
+		return;
+	}
+
+	if (name.startsWith('[Sorcery]')) {
+		param.Name = name.replace('[Sorcery] ', '');
+		const sorcery = format.sorcery(param, goodsMsg, parsed);
+		parsed.sorceries[id] = sorcery;
+		return;
+	}
+
+	if (param.goodsUseAnim == 34) {
+		const spirit = format.spirit(param, goodsMsg, parsed);
+		parsed.spirits[id] = spirit;
+		return;
+	}
+
+	if (param.isConsume == 1 && param.goodsType != 2) {
+		const consumable = format.consumable(param, goodsMsg, parsed);
+		parsed.consumables[id] = consumable;
+		return;
+	}
+});
+
+writeFileSync('./data/Incantations.json', JSON.stringify(parsed.incantations, null, 2));
+writeFileSync('./data/Sorceries.json', JSON.stringify(parsed.sorceries, null, 2));
+writeFileSync('./data/Spirits.json', JSON.stringify(parsed.spirits, null, 2));
+writeFileSync('./data/Consumables.json', JSON.stringify(parsed.consumables, null, 2));

@@ -112,6 +112,87 @@ function armor(armor, armorMsg, parsed) {
 	return parsedArmor;
 }
 
+function talisman(talisman, talismanMsg, parsed) {
+	const parsedTalisman = {
+		id: parseInt(talisman.ID, 10),
+		name: talisman.Name,
+		iconID: parseInt(talisman.iconId, 10),
+		rarity: parseInt(talisman.rarity, 10),
+		weight: parseFloat(talisman.weight),
+		caption: [],
+		loot: { locations: [], drops: [] }
+	};
+
+	lore(parsedTalisman, talismanMsg);
+	loot(parsedTalisman, parsed);
+
+	return parsedTalisman;
+}
+
+function incantation(incantation, goodsMsg, parsed) {
+	const parsedIncantation = {
+		id: parseInt(incantation.ID, 10),
+		name: incantation.Name,
+		iconID: parseInt(incantation.iconId, 10),
+		rarity: parseInt(incantation.rarity, 10),
+		caption: [],
+		loot: { locations: [], drops: [] }
+	};
+
+	lore(parsedIncantation, goodsMsg);
+	loot(parsedIncantation, parsed);
+
+	return parsedIncantation;
+}
+
+function sorcery(sorcery, goodsMsg, parsed) {
+	const parsedSorcery = {
+		id: parseInt(sorcery.ID, 10),
+		name: sorcery.Name,
+		iconID: parseInt(sorcery.iconId, 10),
+		rarity: parseInt(sorcery.rarity, 10),
+		caption: [],
+		loot: { locations: [], drops: [] }
+	};
+
+	lore(parsedSorcery, goodsMsg);
+	loot(parsedSorcery, parsed);
+
+	return parsedSorcery;
+}
+
+function spirit(spirit, goodsMsg, parsed) {
+	const parsedSpirit = {
+		id: parseInt(spirit.ID, 10),
+		name: spirit.Name,
+		iconID: parseInt(spirit.iconId, 10),
+		rarity: parseInt(spirit.rarity, 10),
+		caption: [],
+		loot: { locations: [], drops: [] }
+	};
+
+	lore(parsedSpirit, goodsMsg);
+	loot(parsedSpirit, parsed);
+
+	return parsedSpirit;
+}
+
+function consumable(consumable, goodsMsg, parsed) {
+	const parsedConsumable = {
+		id: parseInt(consumable.ID, 10),
+		name: consumable.Name,
+		iconID: parseInt(consumable.iconId, 10),
+		rarity: parseInt(consumable.rarity, 10),
+		caption: [],
+		loot: { locations: [], drops: [] }
+	};
+
+	lore(parsedConsumable, goodsMsg);
+	loot(parsedConsumable, parsed);
+
+	return parsedConsumable;
+}
+
 function weaponSkill(parsedWeapon, parsed) {
 	if (parsedWeapon.skill != 0) {
 		let skillName = parsed.ashesIDs[parsedWeapon.skill];
@@ -234,4 +315,4 @@ function isValidLocData(item, loc) {
 	return true;
 }
 
-export default { weapon, armor, skill };
+export default { weapon, armor, talisman, skill, incantation, sorcery, spirit, consumable };
