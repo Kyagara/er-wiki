@@ -57,7 +57,7 @@
 				{#if Object.keys(weapon.stats).length > 1}
 					<Dropdown
 						bind:selected={statID}
-						items={Object.fromEntries(Object.entries(weapon.stats).map(([id, s]) => [id, s.name]))}
+						items={Object.fromEntries(Object.entries(weapon.stats).map(([id, s]) => [s.name, id]))}
 					/>
 				{/if}
 			</div>

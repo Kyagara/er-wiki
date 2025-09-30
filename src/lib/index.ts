@@ -61,6 +61,21 @@ export function specialAttribute(spAttribute: number) {
 	}
 }
 
+export function armorType(type: number) {
+	switch (type) {
+		case 0:
+			return 'Head';
+		case 1:
+			return 'Body';
+		case 2:
+			return 'Arms';
+		case 3:
+			return 'Legs';
+		default:
+			return 'UNKNOWN';
+	}
+}
+
 export function weaponType(type: number) {
 	switch (type) {
 		case 0:

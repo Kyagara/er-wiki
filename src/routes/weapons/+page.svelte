@@ -7,12 +7,12 @@
 
 	const { weapons, types } = getWeaponsData();
 
-	let selected = $state('All');
+	let selected = $state(999);
 	let search = $state('');
 	let filtered: ListPageData[] = $state([]);
 
 	$effect(() => {
-		let base = selected == 'All' ? Object.values(weapons).flat() : (weapons[selected] ?? []);
+		let base = selected == 999 ? Object.values(weapons).flat() : (weapons[selected] ?? []);
 
 		const q = (search ?? '').trim().toLowerCase();
 		if (!q) {
@@ -20,7 +20,7 @@
 			return;
 		}
 
-		selected = 'All';
+		selected = 999;
 
 		filtered = base.filter((w) => {
 			const name = (w.n ?? '').toLowerCase();

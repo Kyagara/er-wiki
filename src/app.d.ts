@@ -3,7 +3,7 @@
 declare global {
 	type ListPageData = {
 		id: number;
-		r: string;
+		r: number;
 		n: string;
 		ic: number;
 	};
@@ -12,7 +12,7 @@ declare global {
 		id: number;
 		name: string;
 		iconID: number;
-		rarity: string;
+		rarity: number;
 		caption: string[];
 		loot: {
 			locations: ItemLocation[];
@@ -24,8 +24,8 @@ declare global {
 		id: number;
 		name: string;
 		iconID: number;
-		rarity: string;
-		type: string;
+		rarity: number;
+		type: number;
 		weight: number;
 		caption: string[];
 		loot?: {
@@ -51,8 +51,8 @@ declare global {
 		id: number;
 		name: string;
 		iconID: number;
-		rarity: string;
-		type: string;
+		rarity: number;
+		type: number;
 		weight: number;
 		attackAttributes: string[];
 		skill: WeaponSkill;
@@ -87,7 +87,7 @@ declare global {
 
 	type WeaponStats = {
 		name: string;
-		specialAttribute?: string;
+		specialAttribute?: number;
 		effects?: string[];
 		damage: {
 			base: {

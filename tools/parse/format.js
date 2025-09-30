@@ -101,10 +101,10 @@ function armor(armor, armorMsg, parsed) {
 		loot: { locations: [], drops: [] }
 	};
 
-	if (armor.headEquip == 1) parsedArmor.type = 'Head';
-	if (armor.bodyEquip == 1) parsedArmor.type = 'Body';
-	if (armor.armEquip == 1) parsedArmor.type = 'Arms';
-	if (armor.legEquip == 1) parsedArmor.type = 'Legs';
+	if (armor.headEquip == 1) parsedArmor.type = 0;
+	if (armor.bodyEquip == 1) parsedArmor.type = 1;
+	if (armor.armEquip == 1) parsedArmor.type = 2;
+	if (armor.legEquip == 1) parsedArmor.type = 3;
 
 	lore(parsedArmor, armorMsg);
 	loot(parsedArmor, parsed);

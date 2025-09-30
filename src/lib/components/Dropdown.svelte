@@ -11,7 +11,7 @@
 		bind:value={selected}
 		class="appearance-none border border-gray-700 bg-gray-900 py-1.5 pr-8 pl-3 text-sm text-gray-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
 	>
-		{#each Object.entries(items) as [id, name]}
+		{#each Object.entries(items) as [name, id]}
 			<option value={id}>{name}</option>
 		{/each}
 	</select>

@@ -1,9 +1,9 @@
-import ashesData from '@data/Skills.json' with { type: 'json' };
+import skillsData from '@data/Skills.json' with { type: 'json' };
 
 export function getAshesData() {
 	const ashes: ListPageData[] = [];
 
-	Object.values(ashesData).forEach((a) => {
+	Object.values(skillsData).forEach((a) => {
 		if (!a.iconID) return;
 
 		ashes.push({
@@ -18,9 +18,9 @@ export function getAshesData() {
 }
 
 export function getAsh(id: String) {
-	for (const key in ashesData) {
-		if (ashesData[key].id == id) {
-			return ashesData[key];
+	for (const key in skillsData) {
+		if (skillsData[key].id == id) {
+			return skillsData[key];
 		}
 	}
 

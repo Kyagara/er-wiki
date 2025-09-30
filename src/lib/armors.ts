@@ -1,12 +1,14 @@
+import { armorType } from './index.js';
 import armorsData from '@data/Armors.json' with { type: 'json' };
 
 export function getArmorsData() {
 	const armors: Record<string, ListPageData[]> = {};
 
 	Object.values(armorsData).forEach((a) => {
-		if (!armors[a.type]) armors[a.type] = [];
+		const type = armorType(a.type);
+		if (!armors[type]) armors[type] = [];
 
-		armors[a.type].push({
+		armors[type].push({
 			id: a.id,
 			n: a.name,
 			r: a.rarity,

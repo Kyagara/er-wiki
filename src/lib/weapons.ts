@@ -1,11 +1,13 @@
+import { weaponType } from './index.js';
 import weaponsData from '@data/Weapons.json' with { type: 'json' };
 
 export function getWeaponsData() {
 	const weapons: Record<string, ListPageData[]> = {};
-	const unsortedTypes: Record<string, string> = { All: 'All' };
+	const unsortedTypes: Record<string, number> = { All: 999 };
 
 	Object.values(weaponsData).forEach((w) => {
-		if (!unsortedTypes[w.type]) unsortedTypes[w.type] = w.type;
+		const type = weaponType(w.type);
+		if (!unsortedTypes[type]) unsortedTypes[type] = w.type;
 		if (!weapons[w.type]) weapons[w.type] = [];
 
 		weapons[w.type].push({
