@@ -3,11 +3,10 @@
 	import Lore from '$lib/components/details/Lore.svelte';
 	import Preview from '$lib/components/details/Preview.svelte';
 
-	import { getArmorsData } from '$lib/data.js';
+	import { getArmor } from '$lib/armors.js';
 
 	const { params } = $props();
-
-	const armor: Armor = getArmorsData()[params.id];
+	const armor = getArmor(params.id);
 </script>
 
 <svelte:head>

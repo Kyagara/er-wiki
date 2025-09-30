@@ -77,7 +77,7 @@ declare global {
 		id: number;
 		name: string;
 		iconID?: number;
-		caption?: string;
+		caption?: string[];
 	};
 
 	type ItemLocation = {

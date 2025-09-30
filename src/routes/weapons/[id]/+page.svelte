@@ -4,12 +4,11 @@
 	import Preview from '$lib/components/details/Preview.svelte';
 	import Dropdown from '$lib/components/Dropdown.svelte';
 
-	import { getWeaponsData } from '$lib/data.js';
+	import { getWeapon } from '$lib/weapons.js';
 	import { rarityColor } from '$lib/index.js';
 
 	const { params } = $props();
-
-	const weapon: Weapon = getWeaponsData()[params.id];
+	const weapon = getWeapon(params.id);
 
 	let current = $state(weapon.stats[0]);
 	let statID = $state('0');

@@ -3,24 +3,12 @@
 	import Search from '$lib/components/Search.svelte';
 	import Toggle from '$lib/components/Toggle.svelte';
 
-	import { getArmorsData } from '$lib/data.js';
+	import { getArmorsData } from '$lib/armors.js';
 
-	const armors: Record<string, ListPageData[]> = {};
-
-	Object.values(getArmorsData()).forEach((a) => {
-		if (!armors[a.type]) armors[a.type] = [];
-
-		armors[a.type].push({
-			id: a.id,
-			n: a.name,
-			r: a.rarity,
-			ic: a.iconID
-		});
-	});
+	const { armors } = getArmorsData();
 
 	let selected = $state('Body');
 	let search = $state('');
-
 	let filtered: ListPageData[] = $state([]);
 
 	$effect(() => {

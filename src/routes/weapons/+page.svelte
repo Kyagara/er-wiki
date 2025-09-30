@@ -3,29 +3,12 @@
 	import Grid from '$lib/components/Grid.svelte';
 	import Search from '$lib/components/Search.svelte';
 
-	import { getWeaponsData } from '$lib/data.js';
+	import { getWeaponsData } from '$lib/weapons.js';
 
-	const weapons: Record<string, ListPageData[]> = {};
-	const unsortedTypes: Record<string, string> = { All: 'All' };
-
-	Object.values(getWeaponsData()).forEach((w) => {
-		if (!unsortedTypes[w.type]) unsortedTypes[w.type] = w.type;
-		if (!weapons[w.type]) weapons[w.type] = [];
-
-		weapons[w.type].push({
-			id: w.id,
-			n: w.name,
-			r: w.rarity,
-			ic: w.iconID
-		});
-	});
-
-	const sortedEntries = Object.entries(unsortedTypes).sort(([a], [b]) => a.localeCompare(b));
-	const types = Object.fromEntries(sortedEntries);
+	const { weapons, types } = getWeaponsData();
 
 	let selected = $state('All');
 	let search = $state('');
-
 	let filtered: ListPageData[] = $state([]);
 
 	$effect(() => {

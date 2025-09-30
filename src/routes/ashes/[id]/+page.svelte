@@ -3,21 +3,10 @@
 	import Lore from '$lib/components/details/Lore.svelte';
 	import Preview from '$lib/components/details/Preview.svelte';
 
-	import { getAshesData } from '$lib/data.js';
+	import { getAsh } from '$lib/ashes.js';
 
 	const { params } = $props();
-	const data = getAshesData();
-
-	function findByID(id: number) {
-		for (const key in data) {
-			if (data[key].id == id) {
-				return data[key];
-			}
-		}
-		return null;
-	}
-
-	const ash: AshOfWar = findByID(parseInt(params.id, 10));
+	const ash = getAsh(params.id);
 </script>
 
 <svelte:head>

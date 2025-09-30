@@ -2,23 +2,11 @@
 	import Grid from '$lib/components/Grid.svelte';
 	import Search from '$lib/components/Search.svelte';
 
-	import { getAshesData } from '$lib/data.js';
+	import { getAshesData } from '$lib/ashes.js';
 
-	const ashes: ListPageData[] = [];
-
-	Object.values(getAshesData()).forEach((a) => {
-		if (!a.iconID) return;
-
-		ashes.push({
-			id: a.id,
-			n: a.name,
-			r: a.rarity,
-			ic: a.iconID
-		});
-	});
+	const { ashes } = getAshesData();
 
 	let search = $state('');
-
 	let filtered: ListPageData[] = $state([]);
 
 	$effect(() => {

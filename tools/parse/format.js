@@ -1,11 +1,9 @@
-import enums from './enums.js';
-
 function skill(param, ashMsg, parsed) {
 	const parsedAsh = {
 		id: parseInt(param.ID, 10),
 		name: param.Name,
 		iconID: parseInt(param.iconId, 10),
-		rarity: enums.rarity(param.rarity),
+		rarity: parseInt(param.rarity, 10),
 		caption: [],
 		loot: { locations: [], drops: [] }
 	};
@@ -21,8 +19,8 @@ function weapon(wpn, weaponMsg, parsed) {
 		id: parseInt(wpn.ID, 10),
 		name: wpn.Name,
 		iconID: parseInt(wpn.iconId, 10),
-		rarity: enums.rarity(wpn.rarity),
-		type: enums.weaponType(wpn.wepType),
+		rarity: parseInt(wpn.rarity, 10),
+		type: parseInt(wpn.wepType, 10),
 		weight: parseFloat(wpn.weight),
 		attackAttributes: [],
 		skill: parseInt(wpn.swordArtsParamId) || 0,
@@ -96,7 +94,7 @@ function armor(armor, armorMsg, parsed) {
 		id: parseInt(armor.ID, 10),
 		name: armor.Name,
 		iconID: parseInt(armor.iconIdM || armor.iconIdF, 10),
-		rarity: enums.rarity(armor.rarity),
+		rarity: parseInt(armor.rarity, 10),
 		type: '',
 		weight: parseFloat(armor.weight),
 		caption: [],
@@ -139,7 +137,7 @@ function weaponSkill(parsedWeapon, parsed) {
 
 function weaponStats(wpn) {
 	const stats = {
-		specialAttribute: enums.spAttribute(wpn.spAttribute),
+		specialAttribute: parseInt(wpn.spAttribute, 10),
 		effects: [],
 		damage: { base: {} },
 		guard: { cut: {} }
