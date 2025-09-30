@@ -18,32 +18,30 @@ function params() {
 
 	dir.forEach((filename) => {
 		const filepath = `${PARAMS_PATH}/${filename}`;
-		const content = readFileSync(filepath, 'utf8');
+		const strContent = readFileSync(filepath, 'utf8');
 
-		Papa.parse(content, {
+		const parsedFile = {};
+
+		Papa.parse(strContent, {
 			header: true,
 			delimiter: ',',
 			quoteChar: '',
-			complete: function (results) {
-				const data = results.data.reduce((acc, row) => {
-					if (!row.ID || !row.Name || row.Name.includes('[NPC]')) return acc;
+			step: ({ data }) => {
+				if (!data.ID || data.ID == '-1' || !data.Name || data.Name.includes('[NPC]')) return;
 
-					if (filename.includes('Weapon')) {
-						row.alternates = [];
-
-						if (row.originEquipWep != row.ID && acc[row.originEquipWep]) {
-							acc[row.originEquipWep].alternates.push(row);
-							return acc;
-						}
+				if (filename.includes('Weapon')) {
+					data.alternates = [];
+					if (data.originEquipWep != data.ID && parsedFile[data.originEquipWep]) {
+						parsedFile[data.originEquipWep].alternates.push(data);
+						return;
 					}
+				}
 
-					acc[row.ID] = row;
-					return acc;
-				}, {});
-
-				params[filename] = data;
+				parsedFile[data.ID] = data;
 			}
 		});
+
+		params[filename] = parsedFile;
 	});
 
 	return params;

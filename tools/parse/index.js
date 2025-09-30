@@ -1,14 +1,23 @@
 import { writeFileSync } from 'fs';
 
 import read from './read.js';
-import format from './format.js';
 
-console.log('Reading Params csvs');
+import weapons from './categories/weapons.js';
+import skills from './categories/skills.js';
+import armors from './categories/armors.js';
+import talismans from './categories/talismans.js';
+import consumables from './categories/consumables.js';
+import sorceries from './categories/sorceries.js';
+import incantations from './categories/incantations.js';
+import spirits from './categories/spirits.js';
+
+console.log('Reading and storing Params');
 const params = read.params();
-console.log('Reading FMGs');
+
+console.log('Reading and storing FMGs');
 const msgs = read.msgs();
 
-const parsed = {
+const store = {
 	weapons: {},
 	armors: {},
 	talismans: {},
@@ -23,12 +32,16 @@ const parsed = {
 	loot: { locations: {}, drops: {} }
 };
 
-// Loot
+console.log('Parsing:\n');
 
-console.log('Parsing loot');
+///
+/// LOOT ///
+///
+
+console.log('Loot');
 
 Object.entries(params['ItemLotParam_map.csv']).forEach(([id, param]) => {
-	if (!id || !param.Name || !param.lotItemId01) return;
+	if (!param.lotItemId01) return;
 
 	const locData = {
 		id: parseInt(id, 10),
@@ -36,11 +49,11 @@ Object.entries(params['ItemLotParam_map.csv']).forEach(([id, param]) => {
 		itemID: parseInt(param.lotItemId01, 10)
 	};
 
-	parsed.loot.locations[locData.id] = locData;
+	store.loot.locations[locData.id] = locData;
 });
 
 Object.entries(params['ItemLotParam_enemy.csv']).forEach(([id, param]) => {
-	if (!id || !param.Name || !param.lotItemId02) return;
+	if (!param.lotItemId02) return;
 
 	const locData = {
 		id: parseInt(id, 10),
@@ -48,12 +61,14 @@ Object.entries(params['ItemLotParam_enemy.csv']).forEach(([id, param]) => {
 		itemID: parseInt(param.lotItemId02, 10)
 	};
 
-	parsed.loot.drops[locData.id] = locData;
+	store.loot.drops[locData.id] = locData;
 });
 
-// Ashes of War
+///
+// ASHES OF WAR ///
+///
 
-console.log('Parsing Ashes');
+console.log('Ashes');
 
 const ashMsg = {
 	info: msgs['GemInfo'],
@@ -62,25 +77,25 @@ const ashMsg = {
 
 Object.values(params['EquipParamGem.csv']).forEach((param) => {
 	const name = param.Name.replace('Ash of War: ', '');
-	if (!name || name.includes('test gem')) return;
+	if (name.includes('test gem')) return;
 
-	parsed.ashesIDs[param.ID] = name;
+	store.ashesIDs[param.ID] = name;
 
 	if (param.ID < parseInt(10000, 10)) return;
 
 	param.Name = name;
 
-	const ash = format.skill(param, ashMsg, parsed);
-	if (!ash) return;
-
+	const ash = skills.parse(param, ashMsg, store);
 	if (ash.iconID) {
-		parsed.skills[name] = ash;
+		store.skills[name] = ash;
 	}
 });
 
-// Arts (skills)
+///
+// ARTS (skills) ///
+///
 
-console.log('Parsing Arts (skills)');
+console.log('Arts (skills)');
 
 const artMsg = {
 	info: {},
@@ -88,26 +103,24 @@ const artMsg = {
 };
 
 Object.values(params['SwordArtsParam.csv']).forEach((param) => {
-	if (!param.Name || param.Name.includes('%null%')) return;
+	if (param.Name.includes('%null%')) return;
 
-	parsed.artsIDs[param.ID] = param.Name;
+	store.artsIDs[param.ID] = param.Name;
 
-	const art = format.skill(param, artMsg, parsed);
-	if (!art) return;
-
+	const art = skills.parse(param, artMsg, store);
 	delete art.rarity;
 	delete art.iconID;
 
-	if (!parsed.skills[param.Name]) {
-		parsed.skills[param.Name] = art;
+	if (!store.skills[param.Name]) {
+		store.skills[param.Name] = art;
 	}
 });
 
-writeFileSync('./data/Skills.json', JSON.stringify(parsed.skills, null, 2));
+///
+/// WEAPONS ///
+///
 
-// Weapons
-
-console.log('Parsing Weapons');
+console.log('Weapons');
 
 const weaponMsg = {
 	effect: msgs['WeaponEffect'],
@@ -117,18 +130,15 @@ const weaponMsg = {
 
 Object.entries(params['EquipParamWeapon.csv']).forEach(([id, wpn]) => {
 	if (wpn.iconId == 0) return;
-
-	const weapon = format.weapon(wpn, weaponMsg, parsed);
-	if (!weapon) return;
-
-	parsed.weapons[id] = weapon;
+	const weapon = weapons.parse(wpn, weaponMsg, store);
+	store.weapons[id] = weapon;
 });
 
-writeFileSync('./data/Weapons.json', JSON.stringify(parsed.weapons, null, 2));
+///
+/// ARMORS ///
+///
 
-// Armor
-
-console.log('Parsing Armors');
+console.log('Armors');
 
 const armorMsg = {
 	effect: msgs['ProtectorEffect'],
@@ -137,7 +147,7 @@ const armorMsg = {
 };
 
 Object.entries(params['EquipParamProtector.csv']).forEach(([id, param]) => {
-	if (!param.Name || param.Name.includes('Type ') || !(param.iconIdM || param.iconIdF)) return;
+	if (param.Name.includes('Type ') || !(param.iconIdM || param.iconIdF)) return;
 	if (
 		param.Name == 'Head' ||
 		param.Name == 'Body' ||
@@ -147,17 +157,15 @@ Object.entries(params['EquipParamProtector.csv']).forEach(([id, param]) => {
 	)
 		return;
 
-	const armor = format.armor(param, armorMsg, parsed);
-	if (!armor) return;
-
-	parsed.armors[id] = armor;
+	const armor = armors.parse(param, armorMsg, store);
+	store.armors[id] = armor;
 });
 
-writeFileSync('./data/Armors.json', JSON.stringify(parsed.armors, null, 2));
+console.log('Talismans');
 
-console.log('Parsing Talismans');
-
-// Talismans
+///
+/// TALISMANS ///
+///
 
 const talismanMsg = {
 	info: msgs['AccessoryInfo'],
@@ -165,19 +173,15 @@ const talismanMsg = {
 };
 
 Object.entries(params['EquipParamAccessory.csv']).forEach(([id, param]) => {
-	if (!param.Name) return;
-
-	const talisman = format.talisman(param, talismanMsg, parsed);
-	if (!talisman) return;
-
-	parsed.talismans[id] = talisman;
+	const talisman = talismans.parse(param, talismanMsg, store);
+	store.talismans[id] = talisman;
 });
 
-writeFileSync('./data/Talismans.json', JSON.stringify(parsed.talismans, null, 2));
+console.log('Goods (sorceries, incantations, consumables, spirit ashes)');
 
-console.log('Parsing Goods (sorceries, incantations, consumables, spirit ashes)');
-
-// Goods (sorceries, incantations, consumables, spirit ashes)
+///
+/// GOODS (sorceries, incantations, consumables, spirit ashes) ///
+///
 
 const goodsMsg = {
 	info: msgs['GoodsInfo'],
@@ -187,36 +191,50 @@ const goodsMsg = {
 
 Object.entries(params['EquipParamGoods.csv']).forEach(([id, param]) => {
 	const name = param.Name;
-	if (!name || name.includes(' +') || name.includes('NPC ') || !param.iconId) return;
+	if (name.includes(' +') || name.includes('NPC ') || !param.iconId) return;
 
 	if (name.startsWith('[Incantation]')) {
 		param.Name = name.replace('[Incantation] ', '');
-		const incantation = format.incantation(param, goodsMsg, parsed);
-		parsed.incantations[id] = incantation;
+		const incantation = incantations.parse(param, goodsMsg, store);
+		store.incantations[id] = incantation;
 		return;
 	}
 
 	if (name.startsWith('[Sorcery]')) {
 		param.Name = name.replace('[Sorcery] ', '');
-		const sorcery = format.sorcery(param, goodsMsg, parsed);
-		parsed.sorceries[id] = sorcery;
+		const sorcery = sorceries.parse(param, goodsMsg, store);
+		store.sorceries[id] = sorcery;
 		return;
 	}
 
 	if (param.goodsUseAnim == 34) {
-		const spirit = format.spirit(param, goodsMsg, parsed);
-		parsed.spirits[id] = spirit;
+		const spirit = spirits.parse(param, goodsMsg, store);
+		store.spirits[id] = spirit;
 		return;
 	}
 
 	if (param.isConsume == 1 && param.goodsType != 2) {
-		const consumable = format.consumable(param, goodsMsg, parsed);
-		parsed.consumables[id] = consumable;
+		const consumable = consumables.parse(param, goodsMsg, store);
+		store.consumables[id] = consumable;
 		return;
 	}
 });
 
-writeFileSync('./data/Incantations.json', JSON.stringify(parsed.incantations, null, 2));
-writeFileSync('./data/Sorceries.json', JSON.stringify(parsed.sorceries, null, 2));
-writeFileSync('./data/Spirits.json', JSON.stringify(parsed.spirits, null, 2));
-writeFileSync('./data/Consumables.json', JSON.stringify(parsed.consumables, null, 2));
+///
+/// DUMP
+///
+
+console.log('\nSaving');
+
+writeFileSync('./data/Skills.json', JSON.stringify(store.skills, null, 2));
+
+writeFileSync('./data/Weapons.json', JSON.stringify(store.weapons, null, 2));
+
+writeFileSync('./data/Armors.json', JSON.stringify(store.armors, null, 2));
+
+writeFileSync('./data/Talismans.json', JSON.stringify(store.talismans, null, 2));
+
+writeFileSync('./data/Incantations.json', JSON.stringify(store.incantations, null, 2));
+writeFileSync('./data/Sorceries.json', JSON.stringify(store.sorceries, null, 2));
+writeFileSync('./data/Spirits.json', JSON.stringify(store.spirits, null, 2));
+writeFileSync('./data/Consumables.json', JSON.stringify(store.consumables, null, 2));
