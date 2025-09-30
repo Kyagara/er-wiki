@@ -31,6 +31,8 @@ After organizing, run `npm run parse` to generate json files at `./data` and the
 
 ### Problems/TODO
 
+- Separate some weapon types (shields, arrows, etc) and some consumables (pots, grease, etc) into separate pages.
+- Add crafting material page.
 - Improve and add more stats.
 - Improve visual of stats section.
 - Script/s and tool/s to extract data to avoid manually doing it, also for converting icons to `webp`.
