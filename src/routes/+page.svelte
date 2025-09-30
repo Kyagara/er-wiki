@@ -18,7 +18,7 @@
 	keywords={`wiki, elden ring, shadow of the erdtree`}
 	openGraph={{
 		title: `er-wiki`,
-		description: `A wiki Elden Ring and its DLC.`,
+		description: `A wiki for Elden Ring and its DLC.`,
 		image: `https://er-wiki.pages.dev/er.gif`,
 		url: `https://er-wiki.pages.dev`,
 		type: 'website',
