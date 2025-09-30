@@ -1,19 +1,26 @@
 <script lang="ts">
 	const menus = [
 		{
+			label: 'GOODS',
+			items: [
+				{ label: 'CONSUMABLES', href: '/consumables' },
+				{ label: 'SPIRITS', href: '/spirits' }
+			]
+		},
+		{
 			label: 'EQUIPMENT',
 			items: [
 				{ label: 'ARMORS', href: '/armors' },
 				{ label: 'ASHES OF WAR', href: '/ashes' },
-				{ label: 'TALISMANS', href: '/' },
+				{ label: 'TALISMANS', href: '/talismans' },
 				{ label: 'WEAPONS', href: '/weapons' }
 			]
 		},
 		{
 			label: 'SPELLS',
 			items: [
-				{ label: 'INCANTATIONS', href: '/' },
-				{ label: 'SORCERIES', href: '/' }
+				{ label: 'INCANTATIONS', href: '/incantations' },
+				{ label: 'SORCERIES', href: '/sorceries' }
 			]
 		}
 	];
@@ -31,13 +38,6 @@
 		<div class="mx-auto max-w-5xl">
 			<div class="flex h-10 items-center justify-center">
 				<ul class="flex h-full">
-					<a
-						href="/"
-						class="flex h-full items-center px-3 text-sm font-bold hover:bg-gray-700 hover:text-white"
-					>
-						CONSUMABLES
-					</a>
-
 					{#each menus as menu}
 						<li class="group relative">
 							<button

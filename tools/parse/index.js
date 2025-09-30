@@ -191,7 +191,7 @@ const goodsMsg = {
 
 Object.entries(params['EquipParamGoods.csv']).forEach(([id, param]) => {
 	const name = param.Name;
-	if (name.includes(' +') || name.includes('NPC ') || !param.iconId) return;
+	if (name.includes(' +') || name.includes('NPC ') || !param.iconId || param.iconId == 0) return;
 
 	if (name.startsWith('[Incantation]')) {
 		param.Name = name.replace('[Incantation] ', '');
