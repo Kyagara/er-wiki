@@ -33,7 +33,7 @@
 
 <CategoryPageHead category={'Weapons'} />
 
-<main class="mx-auto w-full max-w-5xl p-4">
+<div class="mx-auto w-full max-w-5xl p-4">
 	<div class="mb-4 flex min-h-12 items-center gap-3">
 		<Search bind:search />
 
@@ -41,4 +41,4 @@
 	</div>
 
 	<Grid items={filtered} category={'weapons'} threshold={10050} />
-</main>
+</div>

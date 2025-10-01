@@ -1,7 +1,7 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 const data = {
 	weapons: JSON.parse(readFileSync('./data/Weapons.json', 'utf8')),
@@ -37,6 +37,22 @@ const ids = [
 	...incantationsPages,
 	...spiritsPages
 ];
+
+const pages = [
+	'https://er-wiki.pages.dev',
+	'https://er-wiki.pages.dev/weapons',
+	'https://er-wiki.pages.dev/armors',
+	'https://er-wiki.pages.dev/incantations',
+	'https://er-wiki.pages.dev/sorceries',
+	'https://er-wiki.pages.dev/talismans',
+	'https://er-wiki.pages.dev/spirits',
+	'https://er-wiki.pages.dev/ashes',
+	'https://er-wiki.pages.dev/consumables'
+];
+
+ids.forEach((p) => pages.push(`https://er-wiki.pages.dev${p}`));
+
+writeFileSync('./static/sitemap.txt', pages.join('\n') + '\n', 'utf8');
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {

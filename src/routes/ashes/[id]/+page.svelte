@@ -13,8 +13,10 @@
 
 <ItemPageHead item={ash} category="ashes" type={'ash'} />
 
-<main class="mx-auto max-w-6xl px-4 py-2">
-	<a class="italic underline opacity-90 hover:text-white" href="/ashes"> Go back </a>
+<div class="mx-auto max-w-6xl px-4 py-2">
+	<a class="italic underline opacity-90 hover:text-white" href="/ashes">
+		{'<<'} Go back to ashes of war</a
+	>
 
 	<div class="grid grid-cols-1 items-start gap-8 pt-4 lg:grid-cols-3">
 		<div class="flex flex-col gap-2 lg:col-span-2">
@@ -33,4 +35,4 @@
 			<Preview iconID={ash.iconID} />
 		</div>
 	</div>
-</main>
+</div>

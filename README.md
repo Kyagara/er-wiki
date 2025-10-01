@@ -1,25 +1,31 @@
-## er-wiki
-
-An attempt of a wiki for Elden Ring and its DLC. Wanted to have some fun with extracting data and parsing files.
+# er-wiki
 
 <p align="center">
-    <img src="./static/er.gif" height="128" width="128" alt="very important">
+    <img src="./static/er.gif" height="256" width="256" alt="very important">
+    <br/>
+    <em>a er... wiki for elden wing</em>
 </p>
 
 ### About
 
-A live version can be found [here](https://er-wiki.pages.dev/), not updated frequently.
+A prerendered wiki using SvelteKit for Elden Ring and its DLC.
 
-This is by no means a replacement of anything currently, only supporting very basic things and few categories (weapons, armors, ashes of war).
+Wanted to have some fun extracting data and parsing files. This is by no means a replacement of anything currently.
 
-The site is prerendered with sveltekit.
+A live version can be found [here](https://er-wiki.pages.dev/), only updated after big changes.
 
-Extraction of the data is **not automated** and was done using [Smithbox](https://github.com/vawser/Smithbox), only params, text and texture data are used. The data should be organized as such:
+### Setup
+
+Extraction of the data is currently **not automated** and is done using [Smithbox](https://github.com/vawser/Smithbox), with Row Name import enabled.
+
+> I used [WitchyBND](https://github.com/ividyon/WitchyBND) to unpack the icons `.dds` files in bulk instead of Smithbox.
+
+The data should be organized as such:
 
 ```
 // Main data folder in the root
 ./data/
-// Item icons folder with the icons already exported to some image format
+// Folder with the icons already exported to some image format
 ./data/icons
 // Text files
 ./data/msg/engus/item
@@ -29,18 +35,20 @@ Extraction of the data is **not automated** and was done using [Smithbox](https:
 ./static/icons
 ```
 
-Do `npm i` and after making sure you have the required data as above, run `npm run convert:icons`, this will run a python3 script to convert everything to webp and save it to the `./static/icons` folder.
+Run `npm i` to install the packages.
 
-Run `npm run parse` to generate json files at `./data` and then `npm run dev`.
+After making sure you have the required data as above, run `npm run convert:icons`, this will run a `python3` script to convert the icons to webp and save it to `./static/icons`.
+
+Run `npm run parse` to generate json files at `./data` and then finally `npm run dev`.
 
 ### Problems/TODO
 
 - Separate some weapon types (shields, arrows, etc) and some consumables (pots, grease, etc) into separate pages.
-- Maybe switch to a simple svelte:head component instead of using svelte-seo.
 - Add crafting material page.
 - Improve and add more stats.
 - Improve visual of stats section.
 - Script/s and tool/s to extract data to avoid manually doing it.
+- Improve summary for seo related descriptions.
 - Missing values for parameters like `Causes blood loss buildup (<?bleedATKpwr?>)`.\*
 - Missing a lot of item locations (map location and enemy drop).\*
 - Missing weapons scaling and upgrade information.\*

@@ -36,8 +36,10 @@
 
 <ItemPageHead item={weapon} category="weapons" type={weaponType(weapon.type)} />
 
-<main class="mx-auto max-w-6xl px-4 py-2">
-	<a class="italic underline opacity-90 hover:text-white" href="/weapons"> Go back </a>
+<div class="mx-auto max-w-6xl px-4 py-2">
+	<a class="italic underline opacity-90 hover:text-white" href="/weapons">
+		{'<<'} Go back to weapons</a
+	>
 
 	<div class="grid grid-cols-1 items-start gap-8 pt-4 lg:grid-cols-3">
 		<div class="flex flex-col gap-2 lg:col-span-2">
@@ -169,9 +171,7 @@
 						alt="Icon"
 						loading="lazy"
 					/>
-				{/if}
 
-				{#if weapon.skill.iconID}
 					<a
 						href={`/ashes/${weapon.skill.id}`}
 						class="py-2 underline"
@@ -183,4 +183,4 @@
 			{/if}
 		</div>
 	</div>
-</main>
+</div>

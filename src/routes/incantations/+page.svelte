@@ -29,10 +29,10 @@
 
 <CategoryPageHead category={'Incantations'} />
 
-<main class="mx-auto w-full max-w-5xl p-4">
+<div class="mx-auto w-full max-w-5xl p-4">
 	<div class="mb-4 flex min-h-12 items-center gap-3">
 		<Search bind:search />
 	</div>
 
 	<Grid items={filtered} category={'incantations'} threshold={6254} />
-</main>
+</div>

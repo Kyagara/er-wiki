@@ -8,9 +8,9 @@
 
 <Navbar />
 
-<div class="pt-10">
+<main class="pt-10">
 	{@render children()}
-</div>
+</main>
 
 <style>
 	:global(body) {

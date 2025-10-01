@@ -32,17 +32,17 @@
 	<meta property="og:site_name" content="er-wiki" />
 </svelte:head>
 
-<main class="h-[calc(100vh-2.5rem)]">
+<div class="h-[calc(100vh-2.5rem)]">
 	{#if image}
-		<img src={image} loading="eager" alt="important" class="mx-auto h-full w-auto object-cover" />
+		<img
+			src={image}
+			fetchpriority="high"
+			alt="important"
+			class="mx-auto h-full w-auto object-cover"
+		/>
 	{/if}
-</main>
+</div>
 
-<img
-	src="/er.gif"
-	width="256"
-	height="256"
-	loading="eager"
-	alt="important too"
-	class="absolute right-0 bottom-0"
-/>
+<video playsinline autoplay muted loop class="absolute right-0 bottom-0">
+	<source src="/er.mp4" />
+</video>
