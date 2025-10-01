@@ -44,6 +44,9 @@ function loot(item, parsed) {
 function isValidLocData(item, loc) {
 	if (loc.itemID != item.id) return false;
 
+	loc.name = loc.name.replace('[Incantation] ');
+	loc.name = loc.name.replace('[Sorcery] ');
+
 	if (!(loc.name.includes('[') && loc.name.includes(']')) || !loc.name.includes(item.name))
 		return false;
 

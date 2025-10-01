@@ -3,7 +3,7 @@
 	import Lore from '$lib/components/details/Lore.svelte';
 	import Preview from '$lib/components/details/Preview.svelte';
 
-	import Head from '$lib/layout/ItemPageHead.svelte';
+	import ItemPageHead from '$lib/layout/ItemPageHead.svelte';
 
 	import { getArmor } from '$lib/armors.js';
 
@@ -11,7 +11,7 @@
 	const armor = getArmor(params.id);
 </script>
 
-<Head item={armor} category="armors" type={'armor'} />
+<ItemPageHead item={armor} category="armors" type={'armor'} />
 
 <main class="mx-auto max-w-6xl px-4 py-2">
 	<a class="italic underline opacity-90 hover:text-white" href="/armors"> Go back </a>

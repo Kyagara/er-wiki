@@ -7,7 +7,7 @@
 	import { getWeapon } from '$lib/weapons.js';
 	import { rarityColor, weaponType } from '$lib/index.js';
 
-	import Head from '$lib/layout/ItemPageHead.svelte';
+	import ItemPageHead from '$lib/layout/ItemPageHead.svelte';
 
 	const { params } = $props();
 	const weapon = getWeapon(params.id);
@@ -34,7 +34,7 @@
 	}
 </script>
 
-<Head item={weapon} category="weapons" type={weaponType(weapon.type)} />
+<ItemPageHead item={weapon} category="weapons" type={weaponType(weapon.type)} />
 
 <main class="mx-auto max-w-6xl px-4 py-2">
 	<a class="italic underline opacity-90 hover:text-white" href="/weapons"> Go back </a>

@@ -1,31 +1,40 @@
 <script lang="ts">
-	import SvelteSeo from 'svelte-seo';
-
 	let { category } = $props();
+
+	let title = $state(`er-wiki - ${category}`);
+
+	let description = $state(
+		`${category == 'Ashes' ? 'Ashes of War' : category || category == 'Spirits' ? 'Spirit ashes' : category} from Elden Ring and its DLC.`
+	);
+
+	let keywords = $state(
+		`wiki, elden ring, shadow of the erdtree, ${category == 'Ashes' ? 'ashes of war, ashes' : category.toLowerCase() || category == 'Spirits' ? 'spirit, spirit ashes' : category.toLowerCase()}`
+	);
+
+	let page = $state(`https://er-wiki.pages.dev/${category}`);
+	let image = 'https://er-wiki.pages.dev/er.gif';
 </script>
 
-<SvelteSeo
-	title={`er-wiki - ${category}`}
-	description={`${category == 'Ashes' ? 'Ashes of War' : category} from Elden Ring and its DLC.`}
-	canonical="https://er-wiki.pages.dev/{category.toLowerCase()}"
-	keywords={`wiki, elden ring, shadow of the erdtree, ${category == 'Ashes' ? 'ashes of war, ashes' : category.toLowerCase()}`}
-	openGraph={{
-		title: `er-wiki - ${category == 'Ashes' ? 'Ashes of War' : category}`,
-		description: `${category == 'Ashes' ? 'Ashes of War' : category} from Elden Ring and its DLC.`,
-		image: `https://er-wiki.pages.dev/er.gif`,
-		url: `https://er-wiki.pages.dev/${category.toLowerCase()}`,
-		type: 'website',
-		images: [
-			{
-				url: `https://er-wiki.pages.dev/er.gif`
-			}
-		],
-		site_name: 'er-wiki'
-	}}
-	twitter={{
-		card: 'summary',
-		title: `er-wiki - ${category == 'Ashes' ? 'Ashes of War' : category}`,
-		description: `${category == 'Ashes' ? 'Ashes of War' : category} from Elden Ring and its DLC.`,
-		image: `https://er-wiki.pages.dev/icons/er.gif`
-	}}
-/>
+<svelte:head>
+	<title>{title}</title>
+
+	<meta name="description" content={description} />
+	<link rel="canonical" href={page} />
+	<meta name="keywords" content={keywords} />
+
+	<meta name="robots" content="index,follow" />
+	<meta name="googlebot" content="index,follow" />
+
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content={image} />
+
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:image" content={image} />
+	<meta property="og:url" content={page} />
+	<meta property="og:type" content="website" />
+	<meta property="og:image:url" content={image} />
+	<meta property="og:site_name" content="er-wiki" />
+</svelte:head>

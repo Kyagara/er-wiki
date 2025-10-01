@@ -56,7 +56,6 @@
 		"publint": "^0.3.2",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
-		"svelte-seo": "^1.7.1",
 		"tailwindcss": "^4.0.0",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.0.0",

@@ -3,7 +3,7 @@
 	import Lore from '$lib/components/details/Lore.svelte';
 	import Preview from '$lib/components/details/Preview.svelte';
 
-	import Head from '$lib/layout/ItemPageHead.svelte';
+	import ItemPageHead from '$lib/layout/ItemPageHead.svelte';
 
 	import { getSpirit } from '$lib/spirits.js';
 
@@ -11,7 +11,7 @@
 	const spirit = getSpirit(params.id);
 </script>
 
-<Head item={spirit} category="spirits" type={'spirit'} />
+<ItemPageHead item={spirit} category="spirits" type={'spirit'} />
 
 <main class="mx-auto max-w-6xl px-4 py-2">
 	<a class="italic underline opacity-90 hover:text-white" href="/spirits"> Go back </a>
