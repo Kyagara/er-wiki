@@ -1,5 +1,3 @@
-import { writeFileSync } from 'fs';
-
 import read from './read.js';
 
 import weapons from './categories/weapons.js';
@@ -166,11 +164,11 @@ Object.entries(params['EquipParamProtector.csv']).forEach(([id, param]) => {
 	store.armors[id] = armor;
 });
 
-console.log('Talismans');
-
 ///
 /// TALISMANS ///
 ///
+
+console.log('Talismans');
 
 const talismanMsg = {
 	info: msgs['AccessoryInfo'],
@@ -182,11 +180,11 @@ Object.entries(params['EquipParamAccessory.csv']).forEach(([id, param]) => {
 	store.talismans[id] = talisman;
 });
 
-console.log('Goods (sorceries, incantations, consumables, spirit ashes)');
-
 ///
 /// GOODS (sorceries, incantations, consumables, spirit ashes) ///
 ///
+
+console.log('Goods (sorceries, incantations, consumables, spirit ashes)');
 
 const goodsMsg = {
 	info: msgs['GoodsInfo'],
@@ -243,3 +241,5 @@ writeFileSync('./data/Incantations.json', JSON.stringify(store.incantations, nul
 writeFileSync('./data/Sorceries.json', JSON.stringify(store.sorceries, null, 2));
 writeFileSync('./data/Spirits.json', JSON.stringify(store.spirits, null, 2));
 writeFileSync('./data/Consumables.json', JSON.stringify(store.consumables, null, 2));
+
+writeFileSync('./data/Store.json', JSON.stringify(store, null, 2));
