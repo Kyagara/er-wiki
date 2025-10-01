@@ -76,8 +76,8 @@ const ashMsg = {
 };
 
 Object.values(params['EquipParamGem.csv']).forEach((param) => {
-	const name = param.Name.replace('Ash of War: ', '');
-	if (name.includes('test gem')) return;
+	let name = param.Name.replace('Ash of War: ', '').replace('Ash of War:', '');
+	if (!name || name.includes('test gem')) return;
 
 	store.ashesIDs[param.ID] = name;
 
@@ -128,9 +128,14 @@ const weaponMsg = {
 	caption: msgs['WeaponCaption']
 };
 
-Object.entries(params['EquipParamWeapon.csv']).forEach(([id, wpn]) => {
-	if (wpn.iconId == 0) return;
-	const weapon = weapons.parse(wpn, weaponMsg, store);
+Object.entries(params['EquipParamWeapon.csv']).forEach(([id, param]) => {
+	// Skip unarmed
+	if (param.iconId == 0) return;
+	const weapon = weapons.parse(param, weaponMsg, store);
+	if (weapon.skill && weapon.skill.iconID) {
+		delete weapon.skill.caption;
+		delete weapon.skill.loot;
+	}
 	store.weapons[id] = weapon;
 });
 

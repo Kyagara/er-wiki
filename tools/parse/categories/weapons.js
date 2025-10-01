@@ -73,32 +73,27 @@ function parse(item, weaponMsg, store) {
 	return parsed;
 }
 
-function skill(parsedWeapon, parsed) {
-	if (parsedWeapon.skill != 0) {
-		let skillName = parsed.ashesIDs[parsedWeapon.skill];
-		if (parsed.artsIDs[parsedWeapon.skill]) {
-			skillName = parsed.artsIDs[parsedWeapon.skill];
+function skill(parsed, store) {
+	if (parsed.skill != 0) {
+		let skillName = store.ashesIDs[parsed.skill];
+		if (store.artsIDs[parsed.skill]) {
+			skillName = store.artsIDs[parsed.skill];
 		}
 
 		if (skillName) {
-			const skill = parsed.skills[skillName];
+			const skill = structuredClone(store.skills[skillName]);
 			if (skill) {
-				if (skill.iconID) {
-					delete skill.caption;
-					delete skill.loot;
-				}
-
-				parsedWeapon.skill = skill;
+				parsed.skill = skill;
 			}
 		}
 	}
 
-	if (parsedWeapon.skill == 0) delete parsedWeapon.skill;
+	if (parsed.skill == 0) delete parsed.skill;
 }
 
-function stats(wpn) {
+function stats(item) {
 	const stats = {
-		specialAttribute: parseInt(wpn.spAttribute, 10),
+		specialAttribute: parseInt(item.spAttribute, 10),
 		effects: [],
 		damage: { base: {} },
 		guard: { cut: {} }
@@ -107,7 +102,7 @@ function stats(wpn) {
 	if (!stats.specialAttribute) delete stats.specialAttribute;
 
 	['0', '1', '2'].forEach((idx) => {
-		const val = parseInt(wpn['spEffectMsgId' + idx], 10) || 0;
+		const val = parseInt(item['spEffectMsgId' + idx], 10) || 0;
 		if (val == 0 || val == -1) return;
 		stats.effects.push(val);
 	});
@@ -122,7 +117,7 @@ function stats(wpn) {
 		Dark: 'holy'
 	};
 	Object.entries(attackBase).forEach(([key, name]) => {
-		const val = parseInt(wpn['attackBase' + key], 10) || 0;
+		const val = parseInt(item['attackBase' + key], 10) || 0;
 		if (val == 0) return;
 		stats.damage.base[name] = val;
 	});
@@ -135,7 +130,7 @@ function stats(wpn) {
 		dark: 'holy'
 	};
 	Object.entries(guardCutRate).forEach(([key, name]) => {
-		const val = parseInt(wpn[key + 'GuardCutRate'], 10) || 0;
+		const val = parseInt(item[key + 'GuardCutRate'], 10) || 0;
 		if (val == 0) return;
 		stats.guard.cut[name] = val;
 	});
